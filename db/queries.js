@@ -54,10 +54,69 @@ async function updatePost(id, title, content, published) {
   return updatedPost;
 }
 
+async function getAllCommentFromPost(postId) {
+  const comments = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    select: {
+      comments: true,
+    },
+  });
+  return comments;
+}
+
+async function getSingleComment(id) {
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id,
+    },
+  });
+  return comment;
+}
+
+async function addNewComment(postId, userId, content) {
+  const comment = await prisma.comment.create({
+    data: {
+      content,
+      postId,
+      userId,
+      dateWritten: new Date(),
+    },
+  });
+  return comment;
+}
+
+async function deleteComment(id) {
+  const comment = await prisma.comment.delete({
+    where: {
+      id,
+    },
+  });
+  return comment;
+}
+
+async function updateComment(id, content) {
+  const comment = await prisma.comment.update({
+    where: {
+      id,
+    },
+    data: {
+      content,
+    },
+  });
+  return comment;
+}
+
 module.exports = {
   createNewPost,
   getAllPosts,
   getPost,
   deletePost,
-  updatePost
+  updatePost,
+  getAllCommentFromPost,
+  getSingleComment,
+  addNewComment,
+  deleteComment,
+  updateComment
 };

@@ -6,7 +6,7 @@ const getAllPosts = async (req, res) => {
 }
 
 const getPost = async (req, res) => {
-    const post = await db.getPost(req.params.id);
+    const post = await db.getPost(parseInt(req.params.postId));
     res.json(post);
 }
 
@@ -17,13 +17,13 @@ const postPost = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
-    const deletedPost = await db.deletePost(req.params.id);
+    const deletedPost = await db.deletePost(parseInt(req.params.postId));
     res.json(deletedPost);
 }
 
 const updatePost = async (req, res) => {
     const published = !!req.body.published
-    const updatedPost = await db.updatePost(req.params.id, req.body.title, req.body.content, published);
+    const updatedPost = await db.updatePost(parseInt(req.params.postId), req.body.title, req.body.content, published);
     res.json(updatedPost)
 }
 

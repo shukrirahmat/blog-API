@@ -1,12 +1,14 @@
 const {Router} = require("express");
 const router = Router();
-const postController = require("../controller/postController")
+const postController = require("../controller/postController");
+const commentsRouter = require("./commentsRouter");
 
 router.get("/", postController.getAllPosts);
-router.get("/:id", postController.getPost);
+router.get("/:postId", postController.getPost);
 router.post("/", postController.postPost);
-router.delete("/:id", postController.deletePost);
-router.put("/:id", postController.updatePost);
+router.delete("/:postId", postController.deletePost);
+router.put("/:postId", postController.updatePost);
+router.use("/:postId/comments", commentsRouter);
 
 
 module.exports = router;

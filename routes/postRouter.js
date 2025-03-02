@@ -8,6 +8,7 @@ router.get("/:postId", postController.getPost);
 router.post("/", postController.postPost);
 router.delete("/:postId", postController.deletePost);
 router.put("/:postId", postController.updatePost);
+
 router.use("/:postId/comments", commentsRouter);
 
 

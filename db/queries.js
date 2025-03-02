@@ -31,6 +31,13 @@ async function createNewPost(title, content, published) {
 }
 
 async function deletePost(id) {
+
+  const deleteComments = await prisma.comment.deleteMany({
+    where: {
+      postId: id
+    }
+  })
+
   const deletedPost = await prisma.post.delete({
     where: {
       id,
@@ -108,6 +115,24 @@ async function updateComment(id, content) {
   return comment;
 }
 
+async function findUser(username) {
+  const user = await prisma.user.findUnique({
+    where: {username}
+  });
+  return user;
+}
+
+async function createUser(username, password, isAuthor) {
+  const user = await prisma.user.create({
+    data: {
+      username,
+      password,
+      isAuthor
+    }
+  })
+  return user;
+}
+
 module.exports = {
   createNewPost,
   getAllPosts,
@@ -118,5 +143,7 @@ module.exports = {
   getSingleComment,
   addNewComment,
   deleteComment,
-  updateComment
+  updateComment,
+  findUser,
+  createUser
 };

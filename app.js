@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const userRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
 
 //MIDDLEWARE
@@ -9,7 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //ROUTES
-app.use("/posts", postRouter)
+app.use("/user", userRouter);
+app.use("/posts", postRouter);
 
 
 //CONNECTING

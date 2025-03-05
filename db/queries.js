@@ -17,13 +17,14 @@ async function getPost(id) {
   return post;
 }
 
-async function createNewPost(title, content, published) {
+async function createNewPost(title, content, authorUsername, published) {
   const post = await prisma.post.create({
     data: {
       title,
       content,
       published,
       datePosted: new Date(),
+      authorUsername
     },
   });
 
@@ -82,13 +83,13 @@ async function getSingleComment(id) {
   return comment;
 }
 
-async function addNewComment(postId, userId, content) {
+async function addNewComment(postId, content, writerUsername) {
   const comment = await prisma.comment.create({
     data: {
       content,
       postId,
-      userId,
       dateWritten: new Date(),
+      writerUsername
     },
   });
   return comment;

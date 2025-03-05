@@ -13,7 +13,7 @@ const getPost = asyncHandler(async (req, res) => {
 
 const postPost = asyncHandler(async (req, res) => {
     const published = !!req.body.published
-    const post = await db.createNewPost(req.body.title, req.body.content, published)
+    const post = await db.createNewPost(req.body.title, req.body.content, req.currentUsername, published)
     res.json(post);
 })
 

@@ -15,12 +15,7 @@ const getSingleComment = asyncHandler(async (req, res) => {
 
 const addNewComment = asyncHandler(async (req, res) => {
     const postId = parseInt(req.params.postId);
-
-    // THIS NEED TO ADJUST
-    const userId = parseInt(req.body.userId)
-    //------------------
-
-    const comment = await db.addNewComment(postId, userId, req.body.content);
+    const comment = await db.addNewComment(postId, req.body.content, req.currentUsername);
     res.json(comment);
 })
 

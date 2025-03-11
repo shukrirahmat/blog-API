@@ -123,12 +123,12 @@ async function findUser(username) {
   return user;
 }
 
-async function createUser(username, password, isAuthor) {
+async function createUser(username, password) {
   const user = await prisma.user.create({
     data: {
       username,
       password,
-      isAuthor
+      isAuthor: false
     }
   })
   return user;

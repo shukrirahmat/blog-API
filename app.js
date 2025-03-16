@@ -14,6 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRouter);
 app.use("/posts", postRouter);
 
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({message: err.message})
+});
+
 
 //CONNECTING
 const PORT = process.env.PORT || 8000;

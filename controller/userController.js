@@ -11,7 +11,9 @@ const signUp = asyncHandler(async (req, res) => {
 
   const existingUser = await db.findUser(req.body.username);
   if (existingUser) {
-    return res.json({error: `Username "${req.body.username}" already exists`});
+    return res.json({
+      error: `Username "${req.body.username}" already exists`,
+    });
   }
 
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -21,18 +23,33 @@ const signUp = asyncHandler(async (req, res) => {
 
 const logIn = asyncHandler(async (req, res) => {
   const user = await db.findUser(req.body.username);
-  if (!user) return res.json({usernameErr: "Username does not exists"});
-  
-  const pwmatch = await bcrypt.compare(req.body.password, user.password);
-  if (!pwmatch) return res.json({passwordErr: "Incorrect password"});
+  if (!user) return res.json({ usernameErr: "Username does not exists" });
 
-  jwt.sign({username: req.body.username}, process.env.TOKEN_SECRET, { expiresIn: '1h' }, (err, token) => {
-    if (err) return res.status(500).json({message: "Login error"});
-    res.json({token});
-  })
-})
+  const pwmatch = await bcrypt.compare(req.body.password, user.password);
+  if (!pwmatch) return res.json({ passwordErr: "Incorrect password" });
+
+  jwt.sign(
+    { username: req.body.username },
+    process.env.TOKEN_SECRET,
+    { expiresIn: "1h" },
+    (err, token) => {
+      if (err) return res.status(500).json({ message: "Login error" });
+      res.json({ token });
+    }
+  );
+});
+
+const getUser = asyncHandler(async (req, res) => {
+  if (req.currentUsername) {
+    const user = await db.findUser(req.currentUsername);
+    return res.json(user);
+  } else {
+    return res.sendStatus(403);
+  }
+});
 
 module.exports = {
   signUp,
-  logIn
+  logIn,
+  getUser
 };

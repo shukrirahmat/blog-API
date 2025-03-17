@@ -44,7 +44,7 @@ const getUser = asyncHandler(async (req, res) => {
     const user = await db.findUser(req.currentUsername);
     return res.json(user);
   } else {
-    return res.sendStatus(403);
+    return res.json({});
   }
 });
 

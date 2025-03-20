@@ -5,7 +5,7 @@ const commentsRouter = require("./commentsRouter");
 const {verifyToken} = require("../controller/authentication")
 
 router.get("/", postController.getAllPosts);
-router.get("/:postId", verifyToken, postController.getPost);
+router.get("/:postId", postController.getPost);
 router.post("/", verifyToken, postController.postPost);
 router.delete("/:postId", verifyToken, postController.deletePost);
 router.put("/:postId", verifyToken, postController.updatePost);

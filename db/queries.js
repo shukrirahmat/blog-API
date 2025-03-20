@@ -3,7 +3,13 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function getAllPosts() {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    orderBy: [
+      {
+        datePosted: 'desc'
+      }
+    ]
+  });
   return posts;
 }
 

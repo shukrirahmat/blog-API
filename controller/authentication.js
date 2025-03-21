@@ -11,14 +11,14 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
         jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
             if (err) {
-                return res.json({});
+                return res.sendStatus(400)
             }
             req.currentUsername = data.username;
             next();
         })
 
     } else {
-        return res.json({});
+        return res.sendStatus(400);
     }
 })
 

@@ -40,12 +40,8 @@ const logIn = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-  if (req.currentUsername) {
     const user = await db.findUser(req.currentUsername);
     return res.json(user);
-  } else {
-    return res.json({});
-  }
 });
 
 module.exports = {

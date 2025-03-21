@@ -18,6 +18,9 @@ async function getPost(id) {
     where: {
       id,
     },
+    include: {
+      comments: true
+    }
   });
 
   return post;

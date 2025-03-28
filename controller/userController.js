@@ -25,6 +25,10 @@ const logIn = asyncHandler(async (req, res) => {
   const user = await db.findUser(req.body.username);
   if (!user) return res.json({ usernameErr: "Username does not exists" });
 
+  if (req.body.authorCheck && !user.isAuthor) {
+    return res.json({ usernameErr: "Username does not exists" });
+  }
+
   const pwmatch = await bcrypt.compare(req.body.password, user.password);
   if (!pwmatch) return res.json({ passwordErr: "Incorrect password" });
 

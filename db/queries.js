@@ -2,8 +2,32 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-async function getAllPosts() {
+async function getAllPostsPublic() {
   const posts = await prisma.post.findMany({
+    where: {
+      published: true
+    },
+    orderBy: [
+      {
+        datePosted: 'desc'
+      }
+    ]
+  });
+  return posts;
+}
+
+async function getAllPostsVerified(username) {
+  const posts = await prisma.post.findMany({
+    where: {
+      OR: [
+        {
+          published: true
+        },
+        {
+          authorUsername: username
+        }
+      ]
+    },
     orderBy: [
       {
         datePosted: 'desc'
@@ -145,7 +169,8 @@ async function createUser(username, password) {
 
 module.exports = {
   createNewPost,
-  getAllPosts,
+  getAllPostsPublic,
+  getAllPostsVerified,
   getPost,
   deletePost,
   updatePost,

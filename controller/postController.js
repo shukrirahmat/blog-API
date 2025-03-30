@@ -7,7 +7,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
     return res.json(posts);
   } else {
     const posts = await db.getAllPostsVerified(req.currentUsername);
-    return res.json(posts);
+    return res.json({username: req.currentUsername});
   }
 });
 

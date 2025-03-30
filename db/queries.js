@@ -18,7 +18,7 @@ async function getAllPostsPublic() {
 
 async function getAllPostsVerified(username) {
   const posts = await prisma.post.findMany({
-    /* where: {
+    where: {
       OR: [
         {
           published: true
@@ -27,7 +27,7 @@ async function getAllPostsVerified(username) {
           authorUsername: username
         }
       ]
-    }, */
+    },
     orderBy: [
       {
         datePosted: 'desc'

@@ -4,10 +4,10 @@ const asyncHandler = require("express-async-handler");
 const getAllPosts = asyncHandler(async (req, res) => {
   if (!req.verified) {
     const posts = await db.getAllPostsPublic();
-    return res.json({verified: false});
+    return res.json(posts);
   } else {
     const posts = await db.getAllPostsVerified(req.currentUsername);
-    return res.json({verified: true});
+    return res.json(posts);
   }
 });
 

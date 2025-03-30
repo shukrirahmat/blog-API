@@ -11,7 +11,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
       if (err) {
-        req.verified = false;
+        req.verified = true;
       } else {
         req.verified = true;
         req.currentUsername = data.username;
@@ -19,7 +19,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
       next();
     });
   } else {
-    req.verified = false;
+    req.verified = true;
     next();
   }
 });

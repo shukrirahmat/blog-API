@@ -2,7 +2,7 @@ const db = require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
 const getAllPosts = asyncHandler(async (req, res) => {
-  if (!req.verified) {
+  if (false) {
     const posts = await db.getAllPostsPublic();
     return res.json(posts);
   } else {

@@ -2,11 +2,11 @@ const db = require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
 const getAllPosts = asyncHandler(async (req, res) => {
-  if (false) {
+  if (!req.verified) {
     const posts = await db.getAllPostsPublic();
     return res.json(posts);
   } else {
-    const posts = await db.getAllPostsVerified('shukri');
+    const posts = await db.getAllPostsVerified(req.currentUsername);
     return res.json(posts);
   }
 });

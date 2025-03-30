@@ -16,11 +16,11 @@ const verifyToken = asyncHandler(async (req, res, next) => {
         req.verified = true;
         req.currentUsername = data.username;
       }
-      next();
+      return next();
     });
   } else {
     req.verified = false;
-    next();
+    return next();
   }
 });
 

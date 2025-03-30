@@ -4,7 +4,6 @@ const db = require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
 const verifyToken = asyncHandler(async (req, res, next) => {
-  /*
   const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
@@ -16,15 +15,13 @@ const verifyToken = asyncHandler(async (req, res, next) => {
       } else {
         req.verified = true;
         req.currentUsername = data.username;
+        next();
       }
     });
   } else {
     req.verified = false;
+    next();
   }
-  */
-  req.verified = true;
-  req.currentUsername = 'shukri';
-  next();
 });
 
 module.exports = {

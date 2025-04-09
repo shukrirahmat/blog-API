@@ -2,34 +2,16 @@ const db = require("../db/queries");
 const asyncHandler = require("express-async-handler");
 
 const getAllPosts = asyncHandler(async (req, res) => {
-  if (!req.verified) {
-    const posts = await db.getAllPostsPublic();
-    return res.json(posts);
-  } else {
-    const posts = await db.getAllPostsVerified(req.currentUsername);
-    return res.json(posts);
-  }
+  const posts = await db.getAllPosts();
+  return res.json(posts);
 });
 
 const getPost = asyncHandler(async (req, res) => {
   const post = await db.getPost(parseInt(req.params.postId));
-  if (post.published) return res.json(post);
-  else {
-    if (!req.verified) {
-      return res.sendStatus(401);
-    }
-    if (req.currentUsername === post.authorUsername) {
-      return res.json(post);
-    }
-    return res.sendStatus(401);
-  }
+  return res.json(post);
 });
 
 const postPost = asyncHandler(async (req, res) => {
-  if (!req.verified) {
-    return res.sendStatus(401);
-  }
-
   const published = !!req.body.published;
   const post = await db.createNewPost(
     req.body.title,
@@ -41,19 +23,11 @@ const postPost = asyncHandler(async (req, res) => {
 });
 
 const deletePost = asyncHandler(async (req, res) => {
-  if (!req.verified) {
-    return res.sendStatus(401);
-  }
-
   const deletedPost = await db.deletePost(parseInt(req.params.postId));
   res.json(deletedPost);
 });
 
 const updatePost = asyncHandler(async (req, res) => {
-  if (!req.verified) {
-    return res.sendStatus(401);
-  }
-  
   const published = !!req.body.published;
   const updatedPost = await db.updatePost(
     parseInt(req.params.postId),

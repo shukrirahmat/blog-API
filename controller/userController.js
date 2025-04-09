@@ -44,10 +44,6 @@ const logIn = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-  if (!req.verified) {
-    return res.sendStatus(401);
-  }
-
   const user = await db.findUser(req.currentUsername);
   return res.json(user);
 });

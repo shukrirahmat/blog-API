@@ -19,7 +19,7 @@ async function getAllPosts() {
 async function getUserPosts(username) {
   const posts = await prisma.post.findMany({
     where: {
-      username,
+      authorUsername: username,
     },
     orderBy: [
       {
@@ -27,6 +27,7 @@ async function getUserPosts(username) {
       },
     ],
   });
+  return posts;
 }
 
 async function getPost(id) {

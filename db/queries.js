@@ -5,26 +5,39 @@ const prisma = new PrismaClient();
 async function getAllPosts() {
   const posts = await prisma.post.findMany({
     where: {
-      published: true
+      published: true,
     },
     orderBy: [
       {
-        datePosted: 'desc'
-      }
-    ]
+        datePosted: "desc",
+      },
+    ],
   });
   return posts;
+}
+
+async function getUserPosts(username) {
+  const posts = await prisma.post.findMany({
+    where: {
+      username,
+    },
+    orderBy: [
+      {
+        datePosted: "desc",
+      },
+    ],
+  });
 }
 
 async function getPost(id) {
   const post = await prisma.post.findUnique({
     where: {
       id,
-      published: true
+      published: true,
     },
     include: {
-      comments: true
-    }
+      comments: true,
+    },
   });
 
   return post;
@@ -37,7 +50,7 @@ async function createNewPost(title, content, authorUsername, published) {
       content,
       published,
       datePosted: new Date(),
-      authorUsername
+      authorUsername,
     },
   });
 
@@ -45,12 +58,11 @@ async function createNewPost(title, content, authorUsername, published) {
 }
 
 async function deletePost(id) {
-
   const deleteComments = await prisma.comment.deleteMany({
     where: {
-      postId: id
-    }
-  })
+      postId: id,
+    },
+  });
 
   const deletedPost = await prisma.post.delete({
     where: {
@@ -102,7 +114,7 @@ async function addNewComment(postId, content, writerUsername) {
       content,
       postId,
       dateWritten: new Date(),
-      writerUsername
+      writerUsername,
     },
   });
   return comment;
@@ -131,7 +143,7 @@ async function updateComment(id, content) {
 
 async function findUser(username) {
   const user = await prisma.user.findUnique({
-    where: {username}
+    where: { username },
   });
   return user;
 }
@@ -141,15 +153,16 @@ async function createUser(username, password) {
     data: {
       username,
       password,
-      isAuthor: false
-    }
-  })
+      isAuthor: false,
+    },
+  });
   return user;
 }
 
 module.exports = {
   createNewPost,
   getAllPosts,
+  getUserPosts,
   getPost,
   deletePost,
   updatePost,
@@ -159,5 +172,5 @@ module.exports = {
   deleteComment,
   updateComment,
   findUser,
-  createUser
+  createUser,
 };

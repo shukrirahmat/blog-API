@@ -6,6 +6,12 @@ const getAllPosts = asyncHandler(async (req, res) => {
   return res.json(posts);
 });
 
+const getUserPosts = asyncHandler(async (req, res) => {
+  const username = req.currentUsername;
+  const posts = await db.getUserPosts(username);
+  return res.json(posts)
+})
+
 const getPost = asyncHandler(async (req, res) => {
   const post = await db.getPost(parseInt(req.params.postId));
   return res.json(post);
@@ -40,6 +46,7 @@ const updatePost = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getUserPosts,
   getPost,
   postPost,
   deletePost,

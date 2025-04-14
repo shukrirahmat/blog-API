@@ -44,6 +44,19 @@ async function getPost(id) {
   return post;
 }
 
+async function getProtectedPost(id) {
+  const post = await prisma.post.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      comments: true,
+    },
+  });
+
+  return post;
+}
+
 async function createNewPost(title, content, authorUsername, published) {
   const post = await prisma.post.create({
     data: {
@@ -165,6 +178,7 @@ module.exports = {
   getAllPosts,
   getUserPosts,
   getPost,
+  getProtectedPost,
   deletePost,
   updatePost,
   getAllCommentFromPost,

@@ -17,6 +17,11 @@ const getPost = asyncHandler(async (req, res) => {
   return res.json(post);
 });
 
+const getProtectedPost = asyncHandler(async (req, res) => {
+  const post = await db.getProtectedPost(parseInt(req.params.postId));
+  return res.json(post);
+})
+
 const postPost = asyncHandler(async (req, res) => {
   const published = !!req.body.published;
   const post = await db.createNewPost(
@@ -48,6 +53,7 @@ module.exports = {
   getAllPosts,
   getUserPosts,
   getPost,
+  getProtectedPost,
   postPost,
   deletePost,
   updatePost,

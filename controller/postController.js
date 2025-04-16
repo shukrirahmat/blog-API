@@ -49,6 +49,12 @@ const updatePost = asyncHandler(async (req, res) => {
   res.json(updatedPost);
 });
 
+const togglePublish = asyncHandler(async (req, res) => {
+  const published = req.params.pstatus === "1" ? true : false;
+  const post = await db.togglePublish(parseInt(req.params.postId), published);
+  res.json(post);
+})
+
 module.exports = {
   getAllPosts,
   getUserPosts,
@@ -57,4 +63,5 @@ module.exports = {
   postPost,
   deletePost,
   updatePost,
+  togglePublish
 };

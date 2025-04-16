@@ -101,6 +101,19 @@ async function updatePost(id, title, content, published) {
   return updatedPost;
 }
 
+async function  togglePublish(id, published) {
+  const updatedPost = await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      published,
+      datePosted: new Date()
+    },
+  });
+  return updatedPost;
+}
+
 async function getAllCommentFromPost(postId) {
   const comments = await prisma.post.findUnique({
     where: {
@@ -181,6 +194,7 @@ module.exports = {
   getProtectedPost,
   deletePost,
   updatePost,
+  togglePublish,
   getAllCommentFromPost,
   getSingleComment,
   addNewComment,

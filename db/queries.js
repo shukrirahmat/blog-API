@@ -194,7 +194,8 @@ async function turnUserToAuthor(username) {
     data :{
       isAuthor: true,
     }
-  })
+  });
+  return user;
 }
 
 module.exports = {

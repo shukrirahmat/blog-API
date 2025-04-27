@@ -48,8 +48,14 @@ const getUser = asyncHandler(async (req, res) => {
   return res.json(user);
 });
 
+const turnUserToAuthor = asyncHandler(async (req, res) => {
+  const user = await db.turnUserToAuthor(req.currentUsername);
+  return res.json(user);
+})
+
 module.exports = {
   signUp,
   logIn,
   getUser,
+  turnUserToAuthor
 };

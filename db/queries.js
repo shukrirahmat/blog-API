@@ -186,6 +186,17 @@ async function createUser(username, password) {
   return user;
 }
 
+async function turnUserToAuthor(username) {
+  const user = await prisma.user.update({
+    where: {
+      username,
+    },
+    data :{
+      isAuthor: true,
+    }
+  })
+}
+
 module.exports = {
   createNewPost,
   getAllPosts,
@@ -202,4 +213,5 @@ module.exports = {
   updateComment,
   findUser,
   createUser,
+  turnUserToAuthor
 };
